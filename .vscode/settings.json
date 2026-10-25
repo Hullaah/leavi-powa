@@ -1,0 +1,19 @@
+{
+  "tailwindCSS.experimental.configFile": "theme/static_src/src/styles.css",
+  "python.analysis.typeCheckingMode": "off",
+  "python.analysis.languageServerMode": "full",
+  "python.analysis.autoImportCompletions": true,
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.ruff": "explicit",
+      "source.organizeImports.ruff": "explicit"
+    }
+  },
+  "[toml]": {
+    "editor.formatOnSave": false
+  },
+  "emmet.includeLanguages": {
+    "django-html": "html"
+  }
+}

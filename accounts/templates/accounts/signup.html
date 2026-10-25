@@ -1,0 +1,74 @@
+{% extends "base.html" %} {% block title %}Create admin account · leavi{%endblock %} {% block body %}
+<div
+  class="min-h-screen flex flex-col items-center justify-center bg-bg px-4 py-12"
+>
+  <div class="w-full max-w-md">
+    <div class="rounded-drawer bg-surface p-10 shadow-popover">
+      <!-- Logo -->
+      <div class="flex flex-col items-center gap-3 mb-7">
+        <div
+          class="flex h-10 w-10 items-center justify-center rounded-[10px] bg-accent text-white"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="size-5.5"
+          >
+            <path d="M8 2v3" />
+            <path d="M16 2v3" />
+            <rect x="3" y="3" class="size-4.5" rx="2" />
+            <path d="M3 9h18" />
+            <path d="m9 15 2 2 4-4" />
+          </svg>
+        </div>
+        <span class="text-base font-semibold">leavi</span>
+      </div>
+
+      <h1
+        class="font-serif text-[28px] font-semibold tracking-tight text-center mb-1.5"
+      >
+        Create your admin account
+      </h1>
+      <p class="text-sm text-text-muted text-center mb-7">
+        Set up leave management for your team.
+      </p>
+
+      <form method="post" class="space-y-4">
+        {% csrf_token %} {% for field in form %}
+        <div>
+          <label class="block text-[13px] font-medium mb-1.5"
+            >{{ field.label }}</label
+          >
+          {{ field }} {% if field.errors %}
+          <p class="mt-1 text-xs text-danger">{{ field.errors.0 }}</p>
+          {% endif %}
+        </div>
+        {% endfor %}
+
+        <button
+          type="submit"
+          class="mt-2 w-full h-11 rounded-control bg-accent text-white text-sm font-medium hover:bg-accent-hover active:bg-accent-pressed transition-colors"
+        >
+          Create account
+        </button>
+      </form>
+
+      <p class="mt-6 text-center text-[13px] text-text-muted">
+        Already have an account?
+        <a
+          href="{% url 'accounts:login' %}"
+          class="text-accent-hover hover:underline"
+          >Sign in</a
+        >
+      </p>
+    </div>
+
+    <p class="mt-6 text-center text-xs text-text-muted">leavi</p>
+  </div>
+</div>
+{% endblock %}

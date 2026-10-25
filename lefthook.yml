@@ -1,0 +1,9 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - name: Lint
+      run: uv run ruff check --fix
+      stage_fixed: true
+    - name: Format
+      run: uv run ruff format
+      stage_fixed: true

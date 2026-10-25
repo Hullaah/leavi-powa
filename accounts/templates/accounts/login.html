@@ -1,0 +1,97 @@
+{% extends "base.html" %} {% block title %}Sign in · leavi{% endblock %} {% block body %}
+<div
+  class="min-h-screen flex flex-col items-center justify-center bg-bg px-4 py-12"
+>
+  <div class="w-full max-w-md">
+    <!-- Card -->
+    <div class="rounded-drawer bg-surface p-10 shadow-popover">
+      <!-- Logo -->
+      <div class="flex flex-col items-center gap-3 mb-7">
+        <div
+          class="flex h-10 w-10 items-center justify-center rounded-[10px] bg-accent text-white"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="size-5.5"
+          >
+            <path d="M8 2v3" />
+            <path d="M16 2v3" />
+            <rect x="3" y="3" class="size-4.5" rx="2" />
+            <path d="M3 9h18" />
+            <path d="m9 15 2 2 4-4" />
+          </svg>
+        </div>
+        <span class="text-base font-semibold">leavi</span>
+      </div>
+
+      <h1
+        class="font-serif text-[28px] font-semibold tracking-tight text-center mb-1.5"
+      >
+        Welcome back
+      </h1>
+      <p class="text-sm text-text-muted text-center mb-7">
+        Sign in to manage your leave.
+      </p>
+
+      {% if form.errors %}
+      <div
+        class="mb-5 rounded-control border border-status-rejected-border bg-status-rejected-bg px-3 py-2.5 text-sm text-status-rejected-text flex items-start gap-2"
+      >
+        <svg
+          class="h-4 w-4 mt-0.5 shrink-0"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <span>Invalid email or password. Please try again.</span>
+      </div>
+      {% endif %}
+
+      <form method="post" class="space-y-4">
+        {% csrf_token %}
+
+        <div>
+          <label class="block text-[13px] font-medium mb-1.5">Email</label>
+          {{ form.username }}
+        </div>
+
+        <div>
+          <div class="flex items-baseline justify-between mb-1.5">
+            <label class="block text-[13px] font-medium">Password</label>
+            <a href="#" class="text-[13px] text-accent-hover hover:underline"
+              >Forgot password?</a
+            >
+          </div>
+          {{ form.password }}
+        </div>
+
+        <button
+          type="submit"
+          class="mt-2 w-full h-11 rounded-control bg-accent text-white text-sm font-medium hover:bg-accent-hover active:bg-accent-pressed transition-colors"
+        >
+          Sign in
+        </button>
+      </form>
+
+      <p class="mt-6 text-center text-[13px] text-text-muted">
+        Need access? Contact your department admin.
+      </p>
+    </div>
+
+    <p class="mt-6 text-center text-xs text-text-muted">leavi</p>
+  </div>
+</div>
+{% endblock %}
