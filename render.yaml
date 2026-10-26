@@ -38,8 +38,8 @@ services:
       - key: DEBUG
         value: "False"
       - key: RESEND_API_KEY
-        sync: true
+        sync: false
       - key: DEFAULT_FROM_EMAIL
-        sync: true
+        sync: false
       - key: SERVER_EMAIL
-        sync: true
+        sync: false
