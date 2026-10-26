@@ -1,0 +1,37 @@
+databases:
+  - name: leavi-powa
+    plan: free
+    databaseName: leavi_powa
+    user: hullaah
+services:
+  - type: web
+    plan: free
+    name: leavi
+    runtime: python
+    buildCommand: "./build.sh"
+    runCommand: "uv run gunicorn myproject.asgi:application -k uvicorn_worker.UvicornWorker"
+    envVars:
+      - key: UV_VERSION
+        value: 0.13.5
+      - key: DB_NAME
+        fromDatabase:
+          name: leavi-powa
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: leavi-powa
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: leavi-powa
+          property: password
+      - key: DB_HOST
+        fromDatabase:
+          name: leavi-powa
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: leavi-powa
+          property: port
+      - key: SECRET_KEY
+        generateValue: true
