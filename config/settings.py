@@ -163,5 +163,9 @@ STORAGES = {
 MAILERS = {
     "default": {
         "BACKEND": "anymail.backends.resend.EmailBackend",
+        "OPTIONS": {"api_key": os.environ["RESEND_API_KEY"]},
     },
 }
+
+DEFAULT_FROM_EMAIL = os.environ["DEFAULT_FROM_EMAIL"]
+SERVER_EMAIL = os.getenv("SERVER_EMAIL", DEFAULT_FROM_EMAIL)

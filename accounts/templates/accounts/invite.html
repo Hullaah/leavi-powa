@@ -1,0 +1,55 @@
+{% extends "layouts/app.html" %}
+{% block title %}Invite employees · leavi{% endblock %} {% block page_title %}Invite employees{% endblock %}
+{% block content %}
+<div class="max-w-xl">
+  <p class="text-text-muted mb-6">Send invitations to join leavi.</p>
+
+  {% if messages %}
+  {% for message in messages %}
+  <div
+    class="mb-4 rounded-control px-4 py-3 text-sm {% if message.tags == 'success' %} bg-status-approved-bg text-status-approved-text border border-status-approved-border {% else %} bg-status-rejected-bg text-status-rejected-text border border-status-rejected-border {% endif %}"
+  >
+    {{ message }}
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <div
+    class="rounded-card border border-border bg-surface p-6 shadow-card mb-8"
+  >
+    <form method="post" class="space-y-4">
+      {% csrf_token %}
+      <div>
+        <label class="block text-[13px] font-medium mb-1.5"
+          >{{ form.email.label }}</label
+        >
+        {{ form.email }}
+      </div>
+      <button
+        type="submit"
+        class="h-10 rounded-control bg-accent px-5 text-sm font-medium text-white hover:bg-accent-hover"
+      >
+        Send invitation
+      </button>
+    </form>
+  </div>
+
+  <h2 class="text-sm font-semibold mb-3">Recent invitations</h2>
+  <div class="rounded-card border border-border bg-surface overflow-hidden">
+    {% for inv in invitations %}
+    <div
+      class="flex items-center justify-between px-4 py-3 border-b border-border last:border-0"
+    >
+      <div>
+        <p class="text-sm font-medium">{{ inv.email }}</p>
+        <p class="text-xs text-text-muted">
+          {% if inv.is_accepted %} Accepted {% elif inv.is_expired %} Expired {% else %} Pending {% endif %} · {{ inv.created_at|timesince }} ago
+        </p>
+      </div>
+    </div>
+    {% empty %}
+    <p class="px-4 py-6 text-sm text-text-muted">No invitations sent yet.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

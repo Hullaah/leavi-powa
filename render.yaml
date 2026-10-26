@@ -35,3 +35,11 @@ services:
           property: port
       - key: SECRET_KEY
         generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: RESEND_API_KEY
+        sync: true
+      - key: DEFAULT_FROM_EMAIL
+        sync: true
+      - key: SERVER_EMAIL
+        sync: true
