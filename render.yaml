@@ -9,7 +9,6 @@ services:
     name: leavi
     runtime: python
     buildCommand: "./build.sh"
-    preDeployCommand: "uv run manage.py migrate"
     startCommand: "uv run gunicorn myproject.asgi:application -k uvicorn_worker.UvicornWorker"
     envVars:
       - key: UV_VERSION
