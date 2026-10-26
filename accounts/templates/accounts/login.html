@@ -87,7 +87,15 @@
       </form>
 
       <p class="mt-6 text-center text-[13px] text-text-muted">
-        Need access? Contact your department admin.
+        Need access? Contact your department admin.<br />
+        <span class="mt-1 inline-block">
+          Admin?
+          <a
+            href="{% url 'accounts:signup' %}"
+            class="text-accent-hover hover:underline"
+            >Create an account</a
+          >
+        </span>
       </p>
     </div>
 
