@@ -9,7 +9,7 @@ services:
     name: leavi
     runtime: python
     buildCommand: "./build.sh"
-    startCommand: "uv run gunicorn myproject.asgi:application -k uvicorn_worker.UvicornWorker"
+    startCommand: "uv run gunicorn config.asgi:application -k uvicorn_worker.UvicornWorker"
     envVars:
       - key: UV_VERSION
         value: 0.13.5
