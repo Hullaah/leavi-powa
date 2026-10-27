@@ -70,3 +70,23 @@ class InviteEmployeeForm(forms.Form):
             }
         ),
     )
+
+
+class AcceptInviteForm(forms.Form):
+    password1 = forms.CharField(
+        label="Set a password",
+        widget=forms.PasswordInput(attrs={"placeholder": "••••••••"}),
+        min_length=8,
+    )
+    password2 = forms.CharField(
+        label="Confirm password",
+        widget=forms.PasswordInput(attrs={"placeholder": "••••••••"}),
+    )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        p1 = cleaned_data.get("password1")
+        p2 = cleaned_data.get("password2")
+        if p1 and p2 and p1 != p2:
+            self.add_error("password2", "Passwords do not match.")
+        return cleaned_data

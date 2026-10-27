@@ -4,12 +4,13 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.mail import EmailMultiAlternatives
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views.generic import CreateView
 
-from .forms import AdminSignUpForm, InviteEmployeeForm, LoginForm
+from .forms import AcceptInviteForm, AdminSignUpForm, InviteEmployeeForm, LoginForm
 from .models import Invitation, User
 
 
@@ -97,5 +98,51 @@ def invite_employee(request):
         {
             "form": form,
             "invitations": invitations,
+        },
+    )
+
+
+def accept_invite(request, token):
+    invitation = get_object_or_404(Invitation, token=token)
+
+    # Already accepted or expired
+    if not invitation.is_valid:
+        return render(
+            request,
+            "accounts/invite_invalid.html",
+            {
+                "invitation": invitation,
+            },
+        )
+
+    if request.method == "POST":
+        form = AcceptInviteForm(request.POST)
+        if form.is_valid():
+            # Create the employee user
+            user = User.objects.create_user(
+                username=invitation.email,
+                email=invitation.email,
+                password=form.cleaned_data["password1"],
+                role=User.Role.EMPLOYEE,
+                company=invitation.invited_by.company,
+            )
+
+            # Mark invitation as accepted
+            invitation.is_accepted = True
+            invitation.accepted_at = timezone.now()
+            invitation.save()
+
+            # Log the new user in
+            login(request, user)
+            return redirect("dashboard")
+    else:
+        form = AcceptInviteForm()
+
+    return render(
+        request,
+        "accounts/accept_invite.html",
+        {
+            "form": form,
+            "invitation": invitation,
         },
     )
