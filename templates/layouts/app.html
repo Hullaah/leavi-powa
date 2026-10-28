@@ -44,7 +44,7 @@
       {% if request.user.is_admin %}
       <!-- Admin navigation -->
       <a
-        href="{% url 'dashboard' %}"
+        href="{% url 'leaves:dashboard' %}"
         class="flex items-center gap-2 h-9 rounded-control px-3 text-sm font-medium {% if request.resolver_match.url_name == 'dashboard' %} bg-accent-soft text-accent-hover {% else %} text-text-secondary hover:bg-surface-muted {% endif %}"
       >
         <svg
@@ -111,7 +111,7 @@
       {% else %}
       <!-- Employee navigation -->
       <a
-        href="{% url 'dashboard' %}"
+        href="{% url 'leaves:my_requests' %}"
         class="flex items-center gap-2 h-9 rounded-control px-3 text-sm font-medium {% if request.resolver_match.url_name == 'dashboard' %} bg-accent-soft text-accent-hover {% else %} text-text-secondary hover:bg-surface-muted {% endif %}"
       >
         <svg
