@@ -1,8 +1,9 @@
-{% extends "layouts/app.html" %} {% block title %}My leave · leavi{% endblock %}
+{% extends "layouts/app.html" %}
+{% block title %}My leave · leavi{% endblock %}
 {% block page_title %}My leave{% endblock %}
 {% block topbar_actions %}
 <a
-  href="#"
+  href="{% url 'leaves:new_request' %}"
   class="inline-flex h-9 items-center gap-1.5 rounded-control bg-accent px-3.5 text-sm font-medium text-white hover:bg-accent-hover"
 >
   <svg
@@ -83,8 +84,7 @@
             </div>
           </td>
           <td class="px-5 py-4">
-            {{ req.start_date|date:"D j M" }} – {{ req.end_date|date:"D j M Y"
-            }}
+            {{ req.start_date|date:"D j M" }} - {{ req.end_date|date:"D j M Y" }}
           </td>
           <td class="px-5 py-4 text-right tabular-nums">
             {{ req.duration_days }}
@@ -131,7 +131,7 @@
   <div class="px-5 py-16 text-center">
     <p class="text-text-muted mb-4">No requests yet</p>
     <a
-      href="#"
+      href="{% url 'leaves:new_request' %}"
       class="inline-flex h-10 items-center rounded-control bg-accent px-4 text-sm font-medium text-white hover:bg-accent-hover"
     >
       Request leave

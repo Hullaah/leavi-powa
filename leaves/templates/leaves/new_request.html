@@ -1,0 +1,75 @@
+{% extends "layouts/app.html" %}
+
+{% block title %}New leave request · leavi{% endblock %}
+{% block page_title %}New leave request{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl ml-auto mr-auto">
+  <form method="post" class="space-y-6">
+    {% csrf_token %}
+
+    <!-- Leave Type -->
+    <div>
+      <label class="block text-[13px] font-medium mb-2">{{ form.leave_type.label }}</label>
+      <div class="flex flex-wrap gap-2">
+        {% for value, label in form.leave_type.field.choices %}
+          {% if value %}
+            <label class="cursor-pointer">
+              <input type="radio" name="leave_type" value="{{ value }}" class="peer sr-only"
+                     {% if form.leave_type.value == value|stringformat:"s" %}checked{% endif %}>
+              <span class="inline-flex items-center gap-1.5 rounded-control border border-border-strong bg-surface px-3 py-1.5 text-sm
+                           peer-checked:border-accent peer-checked:bg-accent-soft peer-checked:text-accent-hover
+                           hover:bg-surface-muted transition-colors">
+                {{ label }}
+              </span>
+            </label>
+          {% endif %}
+        {% endfor %}
+      </div>
+      {% if form.leave_type.errors %}
+        <p class="mt-1 text-xs text-danger">{{ form.leave_type.errors.0 }}</p>
+      {% endif %}
+    </div>
+
+    <!-- Dates -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-[13px] font-medium mb-1.5">{{ form.start_date.label }}</label>
+        {{ form.start_date }}
+        {% if form.start_date.errors %}
+          <p class="mt-1 text-xs text-danger">{{ form.start_date.errors.0 }}</p>
+        {% endif %}
+      </div>
+      <div>
+        <label class="block text-[13px] font-medium mb-1.5">{{ form.end_date.label }}</label>
+        {{ form.end_date }}
+        {% if form.end_date.errors %}
+          <p class="mt-1 text-xs text-danger">{{ form.end_date.errors.0 }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Reason -->
+    <div>
+      <label class="block text-[13px] font-medium mb-1.5">{{ form.reason.label }}</label>
+      {{ form.reason }}
+      <p class="mt-1 text-xs text-text-muted">{{ form.reason.value|default:""|length }} / 500</p>
+      {% if form.reason.errors %}
+        <p class="mt-1 text-xs text-danger">{{ form.reason.errors.0 }}</p>
+      {% endif %}
+    </div>
+
+    <!-- Actions -->
+    <div class="flex items-center justify-end gap-3 pt-2">
+      <a href="{% url 'leaves:my_requests' %}"
+         class="h-10 inline-flex items-center rounded-control px-4 text-sm font-medium text-text-secondary hover:bg-surface-muted">
+        Cancel
+      </a>
+      <button type="submit"
+              class="h-10 rounded-control bg-accent px-5 text-sm font-medium text-white hover:bg-accent-hover">
+        Submit request
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

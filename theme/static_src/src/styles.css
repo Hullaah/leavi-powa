@@ -81,6 +81,7 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="number"],
+input[type="date"],
 textarea,
 select {
   @apply w-full h-10 rounded-control border border-border-strong bg-surface px-3 text-sm text-text
@@ -88,6 +89,10 @@ select {
          hover:border-text-muted
          focus:border-accent focus:outline-none focus:ring-[3px] focus:ring-accent/30
          transition-colors;
+}
+
+textarea {
+  @apply h-1/1;
 }
 
 /**

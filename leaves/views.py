@@ -1,6 +1,11 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
 
+from .forms import LeaveRequestForm
 from .models import LeaveEntitlement, LeaveRequest
 
 
@@ -20,7 +25,7 @@ def my_requests(request):
     if request.user.is_admin:
         return redirect("leaves:dashboard")  # ← fixed incomplete redirect
 
-    # Get entitlements for the employee’s company
+    # Get entitlements for the employee's company
     entitlements = LeaveEntitlement.objects.filter(
         company=request.user.company
     ).select_related("leave_type")
@@ -66,3 +71,27 @@ def my_requests(request):
         "rejected_count": requests.filter(status=LeaveRequest.Status.REJECTED).count(),
     }
     return render(request, "leaves/my_requests.html", context)
+
+
+class NewLeaveRequestView(CreateView, LoginRequiredMixin):
+    model = LeaveRequest
+    form_class = LeaveRequestForm
+    template_name = "leaves/new_request.html"
+    success_url = reverse_lazy("leaves:my_requests")
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_admin:
+            return redirect("leaves:dashboard")
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.employee = self.request.user
+        messages.success(
+            self.request, "Request submitted. Your admin has been notified."
+        )
+        return super().form_valid(form)

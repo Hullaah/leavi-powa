@@ -1,5 +1,5 @@
-{% extends "base.html" %} {% block title %}Invitation invalid · leavi{% endblock%}
-{% block body %}
+{% extends "base.html" %}
+{% block title %}Invitation invalid · leavi{% endblock %} {% block body %}
 <div
   class="min-h-screen flex flex-col items-center justify-center bg-bg px-4 py-12"
 >
@@ -10,10 +10,10 @@
       </h1>
       <p class="text-text-muted mb-6">
         {% if invitation.is_accepted %}
-	This invitation has already been accepted.
-	{% else %}
-	This invitation has expired.
-	{% endif %}
+        This invitation has already been accepted.
+        {% else %}
+        This invitation has expired.
+        {% endif %}
       </p>
       <a
         href="{% url 'accounts:login' %}"

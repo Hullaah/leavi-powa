@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}You’re invited · leavi{% endblock %}
+{% block title %}You're invited · leavi{% endblock %}
 {% block body %}
 <div
   class="min-h-screen flex flex-col items-center justify-center bg-bg px-4 py-12"
@@ -36,23 +36,23 @@
       <h1
         class="font-serif text-[28px] font-semibold tracking-tight text-center mb-1.5"
       >
-        You’re invited
+        You're invited
       </h1>
       <p class="text-sm text-text-muted text-center mb-7">
         {{ invitation.invited_by.get_full_name|default:invitation.invited_by.email }}
-	invited you to join
+         invited you to join
         <strong>{{ invitation.invited_by.company.name }}</strong> on leavi.
       </p>
 
       <form method="post" class="space-y-4">
         {% csrf_token %}
-	{% for field in form %}
+        {% for field in form %}
         <div>
           <label class="block text-[13px] font-medium mb-1.5"
             >{{ field.label }}</label
           >
           {{ field }}
-	  {% if field.errors %}
+          {% if field.errors %}
           <p class="mt-1 text-xs text-danger">{{ field.errors.0 }}</p>
           {% endif %}
         </div>

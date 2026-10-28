@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% block title %}Create admin account · leavi{%endblock %} {% block body %}
+{% extends "base.html" %}
+{% block title %}Create admin account · leavi{%endblock %}
+{% block body %}
 <div
   class="min-h-screen flex flex-col items-center justify-center bg-bg px-4 py-12"
 >
@@ -39,12 +41,14 @@
       </p>
 
       <form method="post" class="space-y-4">
-        {% csrf_token %} {% for field in form %}
+        {% csrf_token %}
+        {% for field in form %}
         <div>
           <label class="block text-[13px] font-medium mb-1.5"
             >{{ field.label }}</label
           >
-          {{ field }} {% if field.errors %}
+          {{ field }}
+          {% if field.errors %}
           <p class="mt-1 text-xs text-danger">{{ field.errors.0 }}</p>
           {% endif %}
         </div>
