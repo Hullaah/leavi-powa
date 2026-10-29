@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>New leave request</title>
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      background-color: #faf9f6;
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        &quot;Segoe UI&quot;,
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+    "
+  >
+    <table
+      role="presentation"
+      width="100%"
+      cellspacing="0"
+      cellpadding="0"
+      border="0"
+      style="background-color: #faf9f6; padding: 40px 16px"
+    >
+      <tr>
+        <td align="center">
+          <table
+            role="presentation"
+            width="100%"
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            style="
+              max-width: 600px;
+              background-color: #ffffff;
+              border: 1px solid #e8e5df;
+              border-radius: 12px;
+              overflow: hidden;
+            "
+          >
+            <!-- Accent bar -->
+            <tr>
+              <td
+                style="
+                  height: 4px;
+                  background-color: #cf4720;
+                  font-size: 0;
+                  line-height: 0;
+                "
+              >
+                &nbsp;
+              </td>
+            </tr>
+
+            <!-- Header -->
+            <tr>
+              <td style="padding: 24px 32px 0 32px">
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                >
+                  <tr>
+                    <td
+                      style="
+                        width: 28px;
+                        height: 28px;
+                        background-color: #cf4720;
+                        border-radius: 6px;
+                        text-align: center;
+                        vertical-align: middle;
+                      "
+                    >
+                      <span
+                        style="
+                          color: #ffffff;
+                          font-size: 14px;
+                          font-weight: 600;
+                          line-height: 28px;
+                        "
+                        >✓</span
+                      >
+                    </td>
+                    <td
+                      style="
+                        padding-left: 10px;
+                        font-size: 18px;
+                        font-weight: 600;
+                        color: #1c1b1a;
+                      "
+                    >
+                      leavi
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Body -->
+            <tr>
+              <td style="padding: 32px">
+                <h1
+                  style="
+                    margin: 0 0 12px 0;
+                    font-family: Georgia, &quot;Times New Roman&quot;, serif;
+                    font-size: 22px;
+                    font-weight: 600;
+                    color: #1c1b1a;
+                  "
+                >
+                  New leave request
+                </h1>
+                <p
+                  style="
+                    margin: 0 0 24px 0;
+                    font-size: 16px;
+                    line-height: 24px;
+                    color: #4a4743;
+                  "
+                >
+                  {{ employee_name }} has submitted a leave request that needs
+                  your review.
+                </p>
+
+                <!-- Summary -->
+                <table
+                  role="presentation"
+                  width="100%"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  style="
+                    background-color: #f1eee8;
+                    border: 1px solid #e8e5df;
+                    border-radius: 8px;
+                    margin-bottom: 28px;
+                  "
+                >
+                  <tr>
+                    <td style="padding: 20px">
+                      <table
+                        role="presentation"
+                        width="100%"
+                        cellspacing="0"
+                        cellpadding="0"
+                        border="0"
+                      >
+                        <tr>
+                          <td
+                            style="
+                              width: 120px;
+                              font-size: 13px;
+                              color: #6b6862;
+                              padding-bottom: 8px;
+                            "
+                          >
+                            Employee
+                          </td>
+                          <td
+                            style="
+                              font-size: 15px;
+                              font-weight: 500;
+                              color: #1c1b1a;
+                              padding-bottom: 8px;
+                            "
+                          >
+                            {{ employee_name }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style="
+                              width: 120px;
+                              font-size: 13px;
+                              color: #6b6862;
+                              padding-bottom: 8px;
+                            "
+                          >
+                            Leave type
+                          </td>
+                          <td
+                            style="
+                              font-size: 15px;
+                              font-weight: 500;
+                              color: #1c1b1a;
+                              padding-bottom: 8px;
+                            "
+                          >
+                            {{ leave_type }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style="
+                              width: 120px;
+                              font-size: 13px;
+                              color: #6b6862;
+                              padding-bottom: 8px;
+                            "
+                          >
+                            Dates
+                          </td>
+                          <td
+                            style="
+                              font-size: 15px;
+                              font-weight: 500;
+                              color: #1c1b1a;
+                              padding-bottom: 8px;
+                            "
+                          >
+                            {{ dates }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style="
+                              width: 120px;
+                              font-size: 13px;
+                              color: #6b6862;
+                            "
+                          >
+                            Duration
+                          </td>
+                          <td
+                            style="
+                              font-size: 15px;
+                              font-weight: 500;
+                              color: #1c1b1a;
+                            "
+                          >
+                            {{ duration }} day{{ duration|pluralize }}
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- CTA -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  align="center"
+                  style="margin: 0 auto"
+                >
+                  <tr>
+                    <td
+                      style="
+                        border-radius: 8px;
+                        background-color: #cf4720;
+                        text-align: center;
+                      "
+                    >
+                      <a
+                        href="{{ dashboard_url }}"
+                        target="_blank"
+                        style="
+                          display: inline-block;
+                          padding: 14px 28px;
+                          font-size: 16px;
+                          font-weight: 600;
+                          color: #ffffff;
+                          text-decoration: none;
+                          border-radius: 8px;
+                        "
+                      >
+                        Review request
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td
+                style="
+                  padding: 0 32px 28px 32px;
+                  text-align: center;
+                  border-top: 1px solid #e8e5df;
+                "
+              >
+                <p style="margin: 20px 0 0 0; font-size: 12px; color: #6b6862">
+                  You are receiving this because you manage leave for {{ company_name }} on leavi.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
