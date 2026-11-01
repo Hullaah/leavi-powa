@@ -1,0 +1,89 @@
+{% extends "layouts/app.html" %}
+{% block title %}All requests · leavi{% endblock %}
+{% block page_title %}All requests{% endblock %}
+{% block content %}
+  <p class="text-text-muted mb-8">All leave requests across your team.</p>
+  <div class="rounded-card border border-border bg-surface shadow-card">
+    <div class="border-b border-border px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <h2 class="text-base font-semibold">Requests</h2>
+      <div class="flex items-center gap-1 p-1 rounded-control bg-surface-muted">
+        <a href="?status=all"
+           class="px-3 py-1.5 rounded text-sm font-medium transition-colors {% if status_filter == 'all' %}bg-surface text-text shadow-sm{% else %}text-text-muted hover:text-text{% endif %}">
+          All <span class="text-text-muted">{{ all_count }}</span>
+        </a>
+        <a href="?status=pending"
+           class="px-3 py-1.5 rounded text-sm font-medium transition-colors {% if status_filter == 'pending' %}bg-surface text-text shadow-sm{% else %}text-text-muted hover:text-text{% endif %}">
+          Pending <span class="text-text-muted">{{ pending_count }}</span>
+        </a>
+        <a href="?status=approved"
+           class="px-3 py-1.5 rounded text-sm font-medium transition-colors {% if status_filter == 'approved' %}bg-surface text-text shadow-sm{% else %}text-text-muted hover:text-text{% endif %}">
+          Approved <span class="text-text-muted">{{ approved_count }}</span>
+        </a>
+        <a href="?status=rejected"
+           class="px-3 py-1.5 rounded text-sm font-medium transition-colors {% if status_filter == 'rejected' %}bg-surface text-text shadow-sm{% else %}text-text-muted hover:text-text{% endif %}">
+          Rejected <span class="text-text-muted">{{ rejected_count }}</span>
+        </a>
+      </div>
+    </div>
+    {% if requests %}
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-border bg-surface-muted/50 text-left text-[12px] font-medium text-text-muted">
+              <th class="px-5 py-3">Employee</th>
+              <th class="px-5 py-3">Leave type</th>
+              <th class="px-5 py-3">Dates</th>
+              <th class="px-5 py-3 text-right">Days</th>
+              <th class="px-5 py-3">Status</th>
+              <th class="px-5 py-3">Submitted</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border">
+            {% for req in requests %}
+              <tr class="hover:bg-surface-muted/40 transition-colors">
+                <td class="px-5 py-4">
+                  <div class="flex items-center gap-2.5">
+                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-accent-soft text-xs font-semibold text-accent-hover">
+                      {{ req.employee.get_initials }}
+                    </div>
+                    <span class="font-medium">{{ req.employee.get_full_name|default:req.employee.email }}</span>
+                  </div>
+                </td>
+                <td class="px-5 py-4">
+                  <div class="flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full"
+                          style="background-color: {{ req.leave_type.color }}"></span>
+                    {{ req.leave_type.name }}
+                  </div>
+                </td>
+                <td class="px-5 py-4">{{ req.start_date|date:"j M" }} - {{ req.end_date|date:"j M Y" }}</td>
+                <td class="px-5 py-4 text-right tabular-nums">{{ req.duration_days }}</td>
+                <td class="px-5 py-4">
+                  {% if req.status == "pending" %}
+                    <span class="inline-flex items-center gap-1.5 rounded-full border border-status-pending-border bg-status-pending-bg px-2.5 py-0.5 text-xs font-medium text-status-pending-text">
+                      <span class="h-1.5 w-1.5 rounded-full bg-status-pending-dot"></span>
+                      Pending
+                    </span>
+                  {% elif req.status == "approved" %}
+                    <span class="inline-flex items-center gap-1.5 rounded-full border border-status-approved-border bg-status-approved-bg px-2.5 py-0.5 text-xs font-medium text-status-approved-text">
+                      <span class="h-1.5 w-1.5 rounded-full bg-status-approved-dot"></span>
+                      Approved
+                    </span>
+                  {% else %}
+                    <span class="inline-flex items-center gap-1.5 rounded-full border border-status-rejected-border bg-status-rejected-bg px-2.5 py-0.5 text-xs font-medium text-status-rejected-text">
+                      <span class="h-1.5 w-1.5 rounded-full bg-status-rejected-dot"></span>
+                      Rejected
+                    </span>
+                  {% endif %}
+                </td>
+                <td class="px-5 py-4 text-text-muted">{{ req.created_at|timesince }} ago</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="px-5 py-16 text-center text-text-muted">No requests found.</div>
+    {% endif %}
+  </div>
+{% endblock %}

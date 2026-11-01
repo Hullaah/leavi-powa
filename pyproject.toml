@@ -19,6 +19,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "djlint>=1.49.0",
     "ruff>=0.17.2",
 ]
 
@@ -46,3 +47,5 @@ extend-select = [
     "FURB",     # Suggest more idiomatic Python patterns
 ]
 
+[tool.djlint]
+ignore = "H021,H030"

@@ -15,5 +15,8 @@
   },
   "emmet.includeLanguages": {
     "django-html": "html"
+  },
+  "[django-html]": {
+    "editor.defaultFormatter": "monosans.djlint"
   }
 }

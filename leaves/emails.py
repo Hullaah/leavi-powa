@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.utils import timezone
 
 
 def send_new_request_email(leave_request, request):
@@ -88,3 +89,43 @@ def send_decision_email(leave_request, request):
     )
     email.attach_alternative(html_content, "text/html")
     email.send()
+
+
+def send_nudge_email(leave_request, request):
+    employee = leave_request.employee
+    company = employee.company
+    admins = company.users.filter(role="admin")
+
+    if not admins.exists():
+        return
+
+    dashboard_url = request.build_absolute_uri(reverse("leaves:dashboard"))
+    waiting_days = (timezone.now().date() - leave_request.created_at.date()).days
+
+    context = {
+        "employee_name": employee.get_full_name() or employee.email,
+        "leave_type": leave_request.leave_type.name,
+        "dates": f"{leave_request.start_date:%d %b} - {leave_request.end_date:%d %b %Y}",  # noqa: E501
+        "waiting_days": max(waiting_days, 0),
+        "company_name": company.name,
+        "dashboard_url": dashboard_url,
+    }
+
+    html_content = render_to_string("emails/nudge.html", context)
+    text_content = (
+        f"Reminder: {context['employee_name']} is waiting for a decision.\n\n"
+        f"Type: {context['leave_type']}\n"
+        f"Dates: {context['dates']}\n"
+        f"Waiting: {context['waiting_days']} day(s)\n\n"
+        f"Review: {dashboard_url}"
+    )
+
+    for admin in admins:
+        email = EmailMultiAlternatives(
+            subject=f"Reminder: pending leave request from {context['employee_name']}",
+            body=text_content,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[admin.email],
+        )
+        email.attach_alternative(html_content, "text/html")
+        email.send()
