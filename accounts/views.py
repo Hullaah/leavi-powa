@@ -23,7 +23,7 @@ class CustomLoginView(LoginView):
 class AdminSignUpView(CreateView):
     form_class = AdminSignUpForm
     template_name = "accounts/signup.html"
-    success_url = reverse_lazy("dashboard")
+    success_url = reverse_lazy("accounts:dashboard")
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -38,7 +38,7 @@ class CustomLogoutView(LogoutView):
 @login_required
 def invite_employee(request):
     if not request.user.is_admin:
-        return redirect("dashboard")
+        return redirect("leaves:dashboard")
 
     if request.method == "POST":
         form = InviteEmployeeForm(request.POST)
@@ -48,6 +48,12 @@ def invite_employee(request):
             # Prevent inviting existing users
             if User.objects.filter(email=email).exists():
                 messages.error(request, "A user with this email already exists.")
+            elif Invitation.objects.filter(
+                email__iexact=email, is_accepted=False
+            ).exists():
+                messages.warning(
+                    request, "An invitation has already been sent to this email."
+                )
             else:
                 invitation = Invitation.objects.create(
                     email=email, invited_by=request.user
@@ -134,7 +140,7 @@ def accept_invite(request, token):
 
             # Log the new user in
             login(request, user)
-            return redirect("dashboard")
+            return redirect("leaves:dashboard")
     else:
         form = AcceptInviteForm()
 
